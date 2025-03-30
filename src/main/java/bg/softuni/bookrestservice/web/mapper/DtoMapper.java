@@ -12,11 +12,9 @@ public class DtoMapper {
     public static ReviewResponse toReviewResponse(Review review) {
 
         return ReviewResponse.builder()
-                .bookId(review.getBookId())
-                .userId(review.getUserId())
                 .rating(review.getRating())
                 .comment(review.getComment())
-                .createdAt(LocalDateTime.now())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 }

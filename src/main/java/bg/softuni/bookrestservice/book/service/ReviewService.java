@@ -2,12 +2,14 @@ package bg.softuni.bookrestservice.book.service;
 
 import bg.softuni.bookrestservice.book.model.Review;
 import bg.softuni.bookrestservice.book.repository.ReviewRepository;
+import bg.softuni.bookrestservice.exception.ReviewNotFoundException;
 import bg.softuni.bookrestservice.web.dto.NewReviewRequest;
 import bg.softuni.bookrestservice.web.dto.ReviewResponse;
 import bg.softuni.bookrestservice.web.mapper.DtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,13 +31,23 @@ public class ReviewService {
   }
 
     public Review createReview(NewReviewRequest newReviewRequest) {
+
+        if (newReviewRequest == null) {
+            throw new IllegalArgumentException("New review request cannot be null");
+        }
+        System.out.println("NewReviewRequest: " + newReviewRequest);
+
+
         Review review = Review.builder()
                 .id(UUID.randomUUID())
                 .bookId(newReviewRequest.getBookId())
                 .userId(newReviewRequest.getUserId())
                 .comment(newReviewRequest.getComment())
                 .rating(newReviewRequest.getRating())
+                .createdAt(LocalDateTime.now())
                 .build();
+
+        System.out.println("Review before save: " + review);
 
         return reviewRepository.save(review);
     }

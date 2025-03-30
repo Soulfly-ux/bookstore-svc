@@ -1,6 +1,6 @@
 package bg.softuni.bookrestservice.web;
 
-import bg.softuni.bookrestservice.book.service.ReviewNotFoundException;
+import bg.softuni.bookrestservice.exception.ReviewNotFoundException;
 import bg.softuni.bookrestservice.book.service.ReviewService;
 
 import bg.softuni.bookrestservice.web.dto.NewReviewRequest;
@@ -26,7 +26,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/{bookId}")
+    @GetMapping("{bookId}")
     public ResponseEntity<List<ReviewResponse>> getReviewsByBookId(@PathVariable UUID bookId) {
 
        return ResponseEntity.ok(reviewService.getReviewsByBookId(bookId));
@@ -35,12 +35,17 @@ public class ReviewController {
 
    @PostMapping
     public ResponseEntity<ReviewResponse> createReview(@RequestBody NewReviewRequest newReviewRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(DtoMapper.toReviewResponse(reviewService.createReview(newReviewRequest)));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(DtoMapper
+                        .toReviewResponse(reviewService
+                                .createReview(newReviewRequest)));
 
-   }
+    }
 
-   @GetMapping("/user/{userId}")
-   public ResponseEntity<List<ReviewResponse>> getReviewsByUserId(@PathVariable UUID userId) {
+
+
+   @GetMapping
+   public ResponseEntity<List<ReviewResponse>> getReviewsByUserId(@RequestParam(name = "userId" ) UUID userId) {
        return ResponseEntity.ok(reviewService.getReviewsByUserId(userId));
 
    }
@@ -53,32 +58,7 @@ public class ReviewController {
 
 
 
-//
-//
-//    @GetMapping
-//    public List<BookResponse> getAllBooks() {
-//
-//        return bookService.getAllBooks().stream().map(DtoMapper::toBookResponse).toList();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Review> getBookById(@PathVariable UUID id) {
-//
-//        return null;
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<BookResponse> createBook(@RequestBody NewBookRequest newBookRequest) {
-//
-//        Review book = bookService.createBook(newBookRequest);
-//
-//        BookResponse bookResponse = DtoMapper.toBookResponse(book);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .header("book-service", "Spring Boot Project")
-//                .body(bookResponse);
-//    }
-//
+
     @GetMapping("/test")
     public ResponseEntity<String> test(@RequestParam String name) {
 
