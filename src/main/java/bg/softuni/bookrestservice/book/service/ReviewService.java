@@ -77,30 +77,5 @@ public class ReviewService {
     }
 
 
-//
-//    public List<Review> getAllBooks() {
-//
-//        return bookRepository.findAll(); }
-//
-//
-//    public Optional<Review> getById(UUID id) {
-//
-//        return bookRepository.findById(id);
-//    }
-//
-//    public Review createBook(NewBookRequest newBookRequest) {
-//
-//        Review book = Review.builder()
-//                .title(newBookRequest.getTitle())
-//                .author(newBookRequest.getAuthor())
-//                .price(newBookRequest.getPrice())
-//                .build();
-//
-//        return bookRepository.save(book);
-//    }
-//
-//    public Review saveBook(Review book) {
-//
-//        return bookRepository.save(book);
-//    }
+
 }
